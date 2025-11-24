@@ -1,27 +1,30 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
-    </div>
-
-    <form method="POST" action="{{ route('password.confirm') }}">
-        @csrf
-
-        <!-- Password -->
-        <div>
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
+@extends('partials.layout')
+@section('title', __('Confirm Password'))
+@section('content')
+    <div class="min-h-[70vh] flex items-center justify-center">
+        <div class="card w-full max-w-md bg-base-100 shadow-xl">
+            <div class="card-body space-y-4">
+                <h1 class="card-title">{{ __('Confirm Password') }}</h1>
+                <p class="text-base-content/80">
+                    {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+                </p>
+                <form method="POST" action="{{ route('password.confirm') }}" class="space-y-4">
+                    @csrf
+                    <fieldset class="fieldset">
+                        <legend class="fieldset-legend">{{ __('Password') }}</legend>
+                        <input id="password" type="password" name="password" class="input w-full"
                             required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                        @error('password')
+                            <p class="label text-error">{{ $message }}</p>
+                        @enderror
+                    </fieldset>
+                    <div class="flex justify-end">
+                        <button class="btn btn-primary" type="submit">
+                            {{ __('Confirm') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <div class="flex justify-end mt-4">
-            <x-primary-button>
-                {{ __('Confirm') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </div>
+@endsection
